@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  notebook:
+    tty: true
+    restart: always
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8888:8888"
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --allow-root --no-browser
+    volumes:
+      - .:/app
+      - py-packages:/usr/local/lib/python3.9/site-packages
+      # - r-packages:/usr/local/lib/R/site-library
+    working_dir: /app
+volumes:
+  py-packages:
+    driver: local
+  r-packages:
+    driver: local
